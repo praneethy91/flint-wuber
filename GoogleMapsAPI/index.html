@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <select id="start">
+    <option value="origin">"43.0125,-83.6875"</option>
+    </select>
+    <select id="end">
+    <option value="destination">"43.013009,-83.683701"</option>
+    </select>
+    <script>
+      function initMap() {
+        //var bounds = new google.maps.LatLngBounds();
+        var directionDisplay = new google.maps.DirectionsRenderer();
+        var directionsService = new google.maps.DirectionsService();
+        var myOptions = {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        }
+        var destinationLong = 43.030009;
+        var destinationLat = -83.703078;
+        var fireStations = [
+        ["Fire Station 1", 43.013009, -83.683701, "Fire Stations"],
+        ["Fire Station 3", 43.030009, -83.703078, "Fire Stations"],
+        ["Fire Station 6", 43.061496, -83.714813, "Fire Stations"],
+        ["Fire Station 5", 43.046672, -83.655046,"Fire Stations"],
+        ["Fire Station 8", 42.988866, -83.672211,"Fire Stations"],
+        ["Michigan Department of Health and Human Services Office 1", 43.018804, -83.691627,"Free Filters"],
+        ["Michigan Department of Health and Human Services Office 2", 43.057720, -83.734974,"Free Filters"],
+        ["Genesee County Community Action Resource Department Office 1", 43.004024, -83.649395,"Free Filters"],
+        ["Genesee County Community Action Resource Department Office 2", 43.047683, -83.692800,"Free Filters"],
+        ["Flint City Hall", 43.017950, -83.692328,"Free Filters"]        
+        ];
+        var originLat = 43.0125;
+        var originLong = -83.6875;
+        var flint = {lat: 43.0125, lng: -83.6875};
+        var map;
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: flint
+        });
+
+        //directionDisplay.setMap(map);
+        var infoWindow = new google.maps.InfoWindow(), marker, i;
+        for (i = 0; i < fireStations.length; i++) { 
+          var infoText = fireStations[i][3];
+          // console.log(infoText);
+          myInfoWindow = new google.maps.InfoWindow({
+          content: infoText
+          });   
+          marker = new google.maps.Marker({
+          position: new google.maps.LatLng(fireStations[i][1], fireStations[i][2]),
+          title:fireStations[i][0],
+          map: map,
+          infowindow: myInfoWindow
+        });
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent('<h1>'+fireStations[i][0]+'</h1>'+fireStations[i][3]);
+                destinationLong = fireStations[i][1];
+                destinationLat = fireStations[i][2];
+                infoWindow.open(map, marker);
+                      var start = "43.0125,-83.6875";
+         var end = (String(destinationLong).concat(",")).concat(String(destinationLat)); 
+         console.log(end);
+         //var end = "43.013009,-83.683701";
+    var request = {
+      origin:start, 
+      destination:end,
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+    directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionDisplay.setDirections(response);
+        var myRoute = response.routes[0];
+        var txtDir = '';
+        for (var i=0; i<myRoute.legs[0].steps.length; i++) {
+          txtDir += myRoute.legs[0].steps[i].instructions+"<br />";
+        }
+        //document.getElementById('directions').innerHTML = txtDir;
+      }
+    });
+            }
+        })(marker, i));
+
+        directionDisplay.setMap(map);
+    }
+
+  }
+
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaoccfoCl_igfzIk4oUZxaGMvQqSnh2QQ&callback=initMap">
+    </script>
+  </body>
+</html>
