@@ -3,6 +3,7 @@ import { Dimensions, AppRegistry, StyleSheet, Image, Text, View, Button, Alert, 
 import MapView from 'react-native-maps';
 
 const { width, height } = Dimensions.get('window');
+const timeout = 1000;
 
 const styles = StyleSheet.create({
  container: {
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
  }
 });
+const markerIDs = ['Marker1', 'Marker2', 'Marker3', 'Marker4', 'Marker5'];
 
 const ASPECT_RATIO = width / height;
 
@@ -53,6 +55,22 @@ class flintWuberApp extends Component {
     };
   }
 
+  componentDidMount() {
+    animationTimeout = setTimeout(() => {
+      this.focus1();
+    }, timeout);
+  }
+
+  componentWillUnmount() {
+    if (animationTimeout) {
+      clearTimeout(animationTimeout);
+    }
+  }
+
+  focus1() {
+    this.map.fitToSuppliedMarkers(markerIDs, true);
+  }
+
   render() {
     const { region } = this.props;
     console.log(region);
@@ -62,6 +80,7 @@ class flintWuberApp extends Component {
         flexDirection: 'column'
       }}>
         <MapView
+          ref={ref => { this.map = ref; }}
           style={styles.container}
           region={{
             latitude: LATITUDE,
