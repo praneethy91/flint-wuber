@@ -43,4 +43,8 @@ class flint-wuber extends Component {
   }
 }
 
+<<<<<<< HEAD
 AppRegistry.registerComponent('flint-wuber', () => flint-wuber);
+=======
+AppRegistry.registerComponent('flint-wuber', () => flint-wuber);
+>>>>>>> 7d1b6fd5c1575a697787416e9596b1e47552d36d

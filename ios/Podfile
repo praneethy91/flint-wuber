@@ -24,4 +24,8 @@ target 'flint-wuber' do
 # when not using frameworks  we can do this instead of including the source files in our project (1/4):
 #  pod 'react-native-maps', path: '../../'
 #  pod 'react-native-google-maps', path: '../../'  # <~~ if you need GoogleMaps support on iOS
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> 7d1b6fd5c1575a697787416e9596b1e47552d36d
