@@ -110,8 +110,13 @@ class flintWuberApp extends Component {
             coordinate={this.state.e}
           />
         </MapView>
-        <View style={{marginTop: 0.84*height}}>
-          <SubmitUserPreferenceButton />
+        <View style={{marginTop: 0.84*height, flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{width: 0.48*width}}>
+            <SubmitUserPreferenceButton />
+          </View>
+          <View style={{width: 0.48*width}}>
+            <FilterButton />
+          </View>
         </View>
         <View style={{
           flexDirection: 'row',
@@ -133,9 +138,27 @@ class flintWuberApp extends Component {
   }
 }
 
+class FilterButton extends Component {
+  _onPressButton() {
+    Alert.alert('Filtered results based on preferences!');
+  }
+
+  render() {
+    return (
+      <Button
+        onPress={this._onPressButton}
+        width={0.5*width}
+        title="Filter"
+        color="#841584"
+        accessibilityLabel="Filter based on your amount and radius">
+      </Button>
+    );
+  }
+}
+
 class SubmitUserPreferenceButton extends Component {
   _onPressButton() {
-    Alert.alert('Button has been pressed!');
+    Alert.alert('Submitted request for water!');
   }
 
   render() {
@@ -143,6 +166,7 @@ class SubmitUserPreferenceButton extends Component {
       <Button
         onPress={this._onPressButton}
         title="Submit"
+        width={0.5*width}
         color="#841584"
         accessibilityLabel="Submit your water preferences">
       </Button>
