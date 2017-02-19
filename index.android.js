@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Dimensions, AppRegistry, StyleSheet, Image, Text, View, Button, Alert, TextInput } from 'react-native';
 import MapView from 'react-native-maps';
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
  container: {
     ...StyleSheet.absoluteFillObject,
-    height: 540,
-    width: 400,
+    height: 0.84 * height,
+    width: width,
     justifyContent: 'flex-end',
     alignItems: 'center',
  },
@@ -14,8 +16,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
  }
 });
-
-const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 
@@ -91,7 +91,7 @@ class flintWuberApp extends Component {
             coordinate={this.state.e}
           />
         </MapView>
-        <View style={{marginTop: 540}}>
+        <View style={{marginTop: 0.84*height}}>
           <SubmitUserPreferenceButton />
         </View>
         <View style={{
@@ -103,7 +103,7 @@ class flintWuberApp extends Component {
               Water(oz)
             </Text>
             <WaterTextInput/>
-            <Text style={{marginLeft: 100, color: "white", backgroundColor:"#141584"}}>
+            <Text style={{marginLeft: 0.27*width, color: "white", backgroundColor:"#141584"}}>
               Radius(miles)
             </Text>
             <RadiusTextInput/>
