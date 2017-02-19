@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, AppRegistry, StyleSheet, Image, Text, View, Button, Alert, TextInput } from 'react-native';
+import { Modal, Dimensions, AppRegistry, StyleSheet, Image, Text, View, Button, Alert, TextInput, TouchableHighlight } from 'react-native';
 import MapView from 'react-native-maps';
 
 const { width, height } = Dimensions.get('window');
@@ -52,7 +52,16 @@ class flintWuberApp extends Component {
         latitude: LATITUDE - (SPACE * 4),
         longitude: LONGITUDE - (SPACE * 4),
       },
+      modalVisible: false
     };
+  }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
+  setMVisible() {
+    this.setState({modalVisible: true});
   }
 
   componentDidMount() {
@@ -79,6 +88,39 @@ class flintWuberApp extends Component {
         flex: 1,
         flexDirection: 'column'
       }}>
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+         <View>
+            <Text>Hello World!</Text>
+            <View style={{marginTop: 0.84*height, flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={{width: 0.48*width}}>
+                <Button
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible)
+                  }}
+                  title="Cancel request"
+                  width={0.5*width}
+                  color="#841584"
+                  accessibilityLabel="Cancel water request">
+                </Button>
+              </View>
+              <View style={{width: 0.48*width}}>
+                <Button
+                  onPress={() => {
+                  }}
+                  title="Confirm request"
+                  width={0.5*width}
+                  color="#841584"
+                  accessibilityLabel="Confirm water request">
+                </Button>
+              </View>
+            </View>
+         </View>
+        </Modal>
         <MapView
           ref={ref => { this.map = ref; }}
           style={styles.container}
@@ -112,7 +154,15 @@ class flintWuberApp extends Component {
         </MapView>
         <View style={{marginTop: 0.84*height, flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{width: 0.48*width}}>
-            <SubmitUserPreferenceButton />
+            <Button
+              onPress={() => {
+                this.setModalVisible(true)
+              }}
+              title="Submit"
+              width={0.5*width}
+              color="#841584"
+              accessibilityLabel="Submit your water preferences">
+            </Button>
           </View>
           <View style={{width: 0.48*width}}>
             <FilterButton />
